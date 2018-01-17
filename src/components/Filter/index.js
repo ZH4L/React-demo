@@ -9,7 +9,9 @@ export default class Filter extends Component {
         super(props);
 
         this.state = {
-            PRODUCTS: []
+            PRODUCTS: [],
+            filterText: "",
+            inStockOnly: false
         };
     }
 
@@ -27,11 +29,37 @@ export default class Filter extends Component {
         });
     }
 
+    // 更改输入框值
+    changeFilterText = (value) => {
+        this.setState({
+            filterText: value
+        })
+    }
+
+    // 更改复选框值
+    changeInStockOnly = (checked) => {
+        this.setState({
+            inStockOnly: checked
+        })
+    }
+
     render () {
+        let filterText = this.state.filterText;
+        let inStockOnly = this.state.inStockOnly;
+
         return (
             <div className="filter">
-                <SearchBar />
-                <ProductTable products={this.state.PRODUCTS} />
+                <SearchBar 
+                    filterText={filterText} 
+                    inStockOnly={inStockOnly}
+                    changeFilterText={this.changeFilterText}
+                    changeInStockOnly={this.changeInStockOnly}
+                />
+                <ProductTable 
+                    products={this.state.PRODUCTS} 
+                    filterText={filterText} 
+                    inStockOnly={inStockOnly} 
+                />
             </div>
         );
     }

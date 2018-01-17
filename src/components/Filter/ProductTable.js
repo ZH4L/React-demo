@@ -11,8 +11,14 @@ class ProductTable extends Component {
     render () {
         let rows = [];
         let lastCategory = null;
+        let filterText = this.props.filterText.toLowerCase(),
+            inStockOnly = this.props.inStockOnly; 
 
         this.props.products.forEach(product => {
+            let name = product.name.toLowerCase();
+            if (name.indexOf(filterText)<0 || !product.stocked && inStockOnly) {
+                return;
+            }
             if (product.category !== lastCategory) {
                 rows.push(<ProductCategoryRow category={product.category} key={product.category} />);
             }
